@@ -1,0 +1,22 @@
+
+apt-get install curl or yum install curl
+curl -L https://cpanmin.us | perl - -M https://cpan.metacpan.org -n Mojolicious
+OR
+curl -L https://cpanmin.us | perl - App::cpanminus	[ This step will install CPAN Minus]
+cpanm Mojolicious
+cpanm Modern::Perl
+cpanm TEST::Harness	Fails
+cpanm Scalar::Util
+cpanm Scalar::Util::blessed	Fails
+cpanm Mojo::IOLoop::Server	up-to-date
+cpanm Mojo::IOLoop::generate_port	Fails
+cpanm IO::Socket
+cpanm IO::Socket::IP
+cpanm IO::Socket::SSL
+cpanm File::Spec::Functions
+cpanm Carp
+cpanm File::Basename	up-to-date
+cpanm Mojo::Base	up-to-date
+cpanm Mojo::EventEmitter	up-to-date
+cpanm --force Mojolicious::Plugin::ParamsAuth
+cpanm Crypt::PBKDF2
