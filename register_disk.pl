@@ -12,9 +12,9 @@
 use strict;
 
 my ($stgref, $stgnm, $vdskref, $vdsk, $curlref, $chk);
-my $RHEVM = "rhevm.mg.ny.frb.org";
-my $DOM = "rb.win.frb.org";
-my $DOM1 = "RB_Domain";
+my $RHEVM = "rhevmanager";
+my $DOM = "dns.domain.net";
+my $DOM1 = "Local_Domain";
 
 print "Your RHEVM Username: ";
 chomp ( my $user = <STDIN> );
