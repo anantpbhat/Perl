@@ -2,7 +2,7 @@
 
 use strict;
 
-my ($hsh, $NO);
+my ($hsh, $YES);
 chomp (my $i = <STDIN>);
 my @in = split /\s+/, "$i";
 chomp (my $mgn = <STDIN>);
@@ -12,21 +12,27 @@ my @nt = split /\s+/, "$not";
 
 foreach my $n ( @nt ) {
     my $m = 0;
+    $YES = "No";
     foreach ( @mn ) {
         if ( /^${n}$/ ) {
-            $hsh->{$n} = $mn[$m];
+	    my $i = 0;
+	    while ( defined $hsh->{$n}->[$i] ) {
+		++$i;
+	    }
+            $hsh->{$n}->[$i] = $mn[$m];
             $mn[$m] = "0";
+	    $YES = "Yes";
             last;
         }
         ++$m;
     }
+    last if $YES eq "No";
 }
-foreach my $k ( @nt ) {
-    $NO = 1 if (! defined $hsh->{$k});
-    $hsh->{$k} = undef;
-}
-if ( $NO ) {
-    print "NO";
-} else {
-    print "YES";
+
+print $YES;
+
+while (my ($ky, $vl) = each %$hsh) {
+	foreach my $i (@$vl) {
+	    print "$ky => $i";
+	}
 }
