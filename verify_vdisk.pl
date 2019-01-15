@@ -6,7 +6,7 @@
 # Author: Anant Bhat.                                                   #
 #                                                                       #
 # Please capture all version changes below                              #
-# Version 1.0 - Initial creation, Anant, 10/05/2015                     #
+# Version 1.0 - Initial creation, Anant                                 #
 #########################################################################
 
 use strict;
@@ -25,7 +25,7 @@ system "/bin/stty", "echo";
 print "\n", "Which Storage Domain to work on? ";
 chomp ( my $stgdm = <STDIN> );
 
-if ( $stgdm =~ m/B[37]((DEV)|(QA)|(PROD))[1-9]_.*/ ) {
+if ( $stgdm =~ m/NY[AB]((DEV)|(QA)|(PROD))[1-9]_.*/ ) {
         print $stgdm, "\n";
 } else {
         die "Invalid Storage Domain Name, Exiting...\n";
@@ -36,7 +36,7 @@ print "Working on it, LDAP authentication could take up to a minute...", "\n";
 
 while (<STGDM>) {
         /HTTP Status 401 / and die "Incorrect Username or Password, Exiting...\n";
-        ( /ExportDomain/ or /ISODomain/ ) && next;
+        ( /ExportDmn/ or /ISODmn/ ) && next;
         if ( m|<name>(.*)</name>| ) {
                 if ( $stgnm && (! exists $stgref->{$stgnm})) {
                         print "Storage Domain ID Missing!!!", "\n";
@@ -72,7 +72,7 @@ close URVDISKS;
 die "Storage Domain $stgdm has no Unregistered vdisks. Exiting...", "\n" if (! $vdsk);
 
 foreach $vdsk (sort keys %{ $vdskref }) {
-        $curlref->{$vdsk} = "/usr/share/centrifydc/bin/curl -v -k -u \'$user\@$DOM\@$DOM1:$pwd\' -H \"Content-type: application/xml\" -d \'\<disk id=\"$vdsk\"\>\<alias\>$vdskref->{$vdsk}\</alias\> \</disk\>\' \"https://$RHEVM/ovirt-engine/api/storagedomains/$stgref->{$stgdm}/disks\;unregistered\" \>/dev/null 2\>\&1";
+        $curlref->{$vdsk} = "curl -v -k -u \'$user\@$DOM\@$DOM1:$pwd\' -H \"Content-type: application/xml\" -d \'\<disk id=\"$vdsk\"\>\<alias\>$vdskref->{$vdsk}\</alias\> \</disk\>\' \"https://$RHEVM/ovirt-engine/api/storagedomains/$stgref->{$stgdm}/disks\;unregistered\" \>/dev/null 2\>\&1";
         print $vdsk, "\t", $vdskref->{$vdsk}, "\n";
 }
 
